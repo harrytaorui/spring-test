@@ -1,6 +1,6 @@
 package com.thoughtworks.rslist.api;
 
-import com.thoughtworks.rslist.domain.Vote;
+import com.thoughtworks.rslist.dto.Vote;
 import com.thoughtworks.rslist.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

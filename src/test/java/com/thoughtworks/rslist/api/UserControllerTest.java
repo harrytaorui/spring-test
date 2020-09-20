@@ -1,9 +1,9 @@
 package com.thoughtworks.rslist.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.rslist.domain.User;
-import com.thoughtworks.rslist.dto.RsEventDto;
-import com.thoughtworks.rslist.dto.UserDto;
+import com.thoughtworks.rslist.dto.User;
+import com.thoughtworks.rslist.entity.RsEventEntity;
+import com.thoughtworks.rslist.entity.UserEntity;
 import com.thoughtworks.rslist.repository.RsEventRepository;
 import com.thoughtworks.rslist.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ class UserControllerTest {
     mockMvc
         .perform(post("/user").contentType(MediaType.APPLICATION_JSON).content(request))
         .andExpect(status().isOk());
-    List<UserDto> all = userRepository.findAll();
+    List<UserEntity> all = userRepository.findAll();
     assertEquals(all.size(), 1);
     assertEquals(all.get(0).getUserName(), "idolice");
     assertEquals(all.get(0).getEmail(), "a@b.com");
@@ -105,8 +105,8 @@ class UserControllerTest {
 
   @Test
   public void shouldDeleteUser() throws Exception {
-    UserDto userDto =
-        UserDto.builder()
+    UserEntity userEntity =
+        UserEntity.builder()
             .voteNum(10)
             .phone("18888888888")
             .gender("female")
@@ -114,10 +114,10 @@ class UserControllerTest {
             .age(19)
             .userName("idolice")
             .build();
-    UserDto save = userRepository.save(userDto);
-    RsEventDto rsEventDto =
-        RsEventDto.builder().keyword("keyword").eventName("eventName").user(save).build();
-    rsEventRepository.save(rsEventDto);
+    UserEntity save = userRepository.save(userEntity);
+    RsEventEntity rsEventEntity =
+        RsEventEntity.builder().keyword("keyword").eventName("eventName").user(save).build();
+    rsEventRepository.save(rsEventEntity);
 
     mockMvc.perform(delete("/user/{id}", save.getId())).andExpect(status().isOk());
 
